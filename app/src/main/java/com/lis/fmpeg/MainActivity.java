@@ -14,6 +14,8 @@ import android.widget.ViewAnimator;
 
 import com.lis.fmpeg.ffmpeg.FfmpegUtils;
 import com.lis.fmpeg.ffmpeg.NativeWindowPlayActivity;
+import com.lis.fmpeg.harddecode.GLVideoActivity;
+import com.lis.fmpeg.harddecode.MediaCodecDecodeActivity;
 import com.lis.fmpeg.utils.CommonUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void goANativeWindowPage(View v) {
         startActivity(new Intent(MainActivity.this, NativeWindowPlayActivity.class));
+    }
+    public void mediaCodecDecode(View v) {
+        startActivity(new Intent(MainActivity.this, MediaCodecDecodeActivity.class));
+    }
+    public void openGLMediaCodecDecode(View v) {
+        startActivity(new Intent(MainActivity.this, GLVideoActivity.class));
     }
 
     public native String stringFromJNI();
