@@ -7,17 +7,12 @@ extern "C" {
 #include <libavcodec/avcodec.h>
 }
 
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_lis_fmpeg_MainActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-    std::string hello = "Hello from C++";
-    LOGI("LPF_TAG", hello.c_str(), 1)
-    return env->NewStringUTF(hello.c_str());
-}
+
+
+
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1GetFFmpegVersion(JNIEnv *env, jclass clazz) {
+Java_com_lis_pplayer_FfmpegUtils_native_1GetFFmpegVersion(JNIEnv *env, jclass clazz) {
     char strBuffer[1024 * 4] = {0};
     strcat(strBuffer, "avcodecConfig:-->");
     strcat(strBuffer, avcodec_configuration());
@@ -25,9 +20,8 @@ Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1GetFFmpegVersion(JNIEnv *env, jcla
 }
 extern "C"
 JNIEXPORT jlong JNICALL
-Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1Init(JNIEnv *env, jobject obj, jstring jurl,
-                                                   jint player_type, jint render_type,
-                                                   jobject surface) {
+Java_com_lis_pplayer_FfmpegUtils_native_1Init(JNIEnv *env, jobject obj, jstring jurl,
+                                              jint player_type, jint render_type, jobject surface) {
     const char *url = env->GetStringUTFChars(jurl, nullptr);
     PlayerWrapper *player = new PlayerWrapper();
     player->init(env, obj, const_cast<char *>(url), player_type, render_type, surface);
@@ -35,9 +29,10 @@ Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1Init(JNIEnv *env, jobject obj, jst
     return reinterpret_cast<jlong>(player);
 }
 
+
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1play(JNIEnv *env, jobject thiz, jlong player_handle) {
+Java_com_lis_pplayer_FfmpegUtils_native_1play(JNIEnv *env, jobject thiz, jlong player_handle) {
     if(player_handle != 0) {
         auto *player = reinterpret_cast<PlayerWrapper*>(player_handle);
         if (player) {
@@ -48,7 +43,7 @@ Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1play(JNIEnv *env, jobject thiz, jl
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1pause(JNIEnv *env, jobject thiz,
+Java_com_lis_pplayer_FfmpegUtils_native_1pause(JNIEnv *env, jobject thiz,
                                                     jlong player_handle) {
     if(player_handle != 0) {
         auto *player = reinterpret_cast<PlayerWrapper*>(player_handle);
@@ -59,7 +54,7 @@ Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1pause(JNIEnv *env, jobject thiz,
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1stop(JNIEnv *env, jobject thiz, jlong player_handle) {
+Java_com_lis_pplayer_FfmpegUtils_native_1stop(JNIEnv *env, jobject thiz, jlong player_handle) {
     if(player_handle != 0) {
         auto *player = reinterpret_cast<PlayerWrapper*>(player_handle);
         if (player) {
@@ -69,7 +64,7 @@ Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1stop(JNIEnv *env, jobject thiz, jl
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1unInit(JNIEnv *env, jobject thiz,
+Java_com_lis_pplayer_FfmpegUtils_native_1unInit(JNIEnv *env, jobject thiz,
                                                      jlong player_handle) {
     if(player_handle != 0) {
         auto *player = reinterpret_cast<PlayerWrapper*>(player_handle);
@@ -77,4 +72,10 @@ Java_com_lis_fmpeg_ffmpeg_FfmpegUtils_native_1unInit(JNIEnv *env, jobject thiz,
             player->unInit();
         }
     }
+}
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_lis_pplayer_FfmpegUtils_stringFromJNI(JNIEnv *env, jobject thiz) {
+    const char * hello = "String From C++";
+    return env->NewStringUTF(hello);
 }

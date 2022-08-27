@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import com.lis.fmpeg.utils.GLTools;
 
@@ -11,6 +12,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class VideoRender implements GLSurfaceView.Renderer {
+    private static final String TAG = "VideoRender";
     private final Context mContext;
     private VideoProgram mVideoProgram;
 
@@ -37,6 +39,9 @@ public class VideoRender implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl10, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
+
+        Log.e(TAG, "onSurfaceChanged宽度: width ==> " + width);
+        Log.e(TAG, "onSurfaceChanged宽度: height ==> " + height);
     }
 
     @Override

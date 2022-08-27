@@ -1,4 +1,4 @@
-package com.lis.fmpeg.ffmpeg;
+package com.lis.pplayer;
 
 public interface EventCallback {
 

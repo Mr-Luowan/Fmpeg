@@ -10,13 +10,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.ViewAnimator;
 
-import com.lis.fmpeg.ffmpeg.FfmpegUtils;
 import com.lis.fmpeg.ffmpeg.NativeWindowPlayActivity;
 import com.lis.fmpeg.harddecode.GLVideoActivity;
 import com.lis.fmpeg.harddecode.MediaCodecDecodeActivity;
 import com.lis.fmpeg.utils.CommonUtils;
+import com.lis.pplayer.FfmpegUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,5 +66,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, GLVideoActivity.class));
     }
 
-    public native String stringFromJNI();
 }

@@ -58,6 +58,11 @@ public class HardDecode extends Thread {
             MediaFormat videoFormat = mMediaExtractor.getTrackFormat(videoIndex);
             String videoMime = videoFormat.getString(MediaFormat.KEY_MIME);
             mDuration = videoFormat.getLong(MediaFormat.KEY_DURATION) / 1000;
+            int videoHeight = videoFormat.getInteger(MediaFormat.KEY_HEIGHT);
+            int videoWidth = videoFormat.getInteger(MediaFormat.KEY_WIDTH);
+
+            Log.e(TAG, "视频宽度: videoWidth ==> " + videoWidth);
+            Log.e(TAG, "视频高度: videoHeight ==> " + videoHeight);
             mCodec = MediaCodec.createDecoderByType(videoMime);
             Log.e(TAG, "start: videoMime ==> " + videoMime);
             Log.e(TAG, "start: mDuration ==> " + mDuration);

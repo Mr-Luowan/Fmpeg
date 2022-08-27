@@ -23,8 +23,10 @@ public class VideoProgram {
     private float[] mTextureCoors = new float[]{
             1f, 1f,
             0f, 1f,
+
+
+            1f, 0f,
             0f, 0f,
-            1f, 0f
     };
     private FloatBuffer mVertexBuffer;
     private FloatBuffer mTextureBuffer;

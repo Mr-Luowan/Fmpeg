@@ -1,16 +1,16 @@
 package com.lis.fmpeg.ffmpeg;
 
-import static com.lis.fmpeg.ffmpeg.FfmpegUtils.VIDEO_RENDER_AN_WINDOW;
+import static com.lis.pplayer.FfmpegUtils.VIDEO_RENDER_AN_WINDOW;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 
 import com.lis.fmpeg.R;
+import com.lis.pplayer.EventCallback;
+import com.lis.pplayer.FfmpegUtils;
 
 public class NativeWindowPlayActivity extends AppCompatActivity implements SurfaceHolder.Callback, EventCallback {
     private static final String TAG = "NativeWindowPlayAc";

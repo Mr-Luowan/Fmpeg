@@ -1,4 +1,4 @@
-package com.lis.fmpeg.ffmpeg;
+package com.lis.pplayer;
 
 import android.view.Surface;
 
@@ -55,6 +55,10 @@ public class FfmpegUtils {
         native_unInit(mNativePlayerHandle);
     }
 
+
+
+
+    public native String stringFromJNI();
 
     private static native String native_GetFFmpegVersion();
 

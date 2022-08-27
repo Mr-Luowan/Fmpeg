@@ -5,6 +5,7 @@ project("fmpeg")
 
 # 1. 定义so库和头文件所在目录，方面后面使用
 set(ffmpeg_lib_dir ${CMAKE_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
+message(WARNING "库文件路径 lib file path --> ${ffmpeg_lib_dir}")
 set(ffmpeg_head_dir ${CMAKE_SOURCE_DIR}/ffmpeginclude)
 
 # 2. 添加头文件目录
@@ -81,9 +82,9 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/player/render/video/NativeRender.cpp
         native-lib.cpp
         )
+
 add_library(
         fmpeg
-
 
         SHARED
 

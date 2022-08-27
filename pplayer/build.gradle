@@ -1,24 +1,31 @@
-apply plugin: 'com.android.application'
-
+plugins {
+    id 'com.android.library'
+}
 
 android {
     compileSdkVersion 31
+
     defaultConfig {
-        applicationId "com.lis.fmpeg"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
-        externalNativeBuild {
-            cmake {
-                cppFlags "-std=c++11 -frtti -fexceptions"
-            }
-        }
+        consumerProguardFiles "consumer-rules.pro"
+
         ndk {
             abiFilters  "armeabi-v7a"
         }
     }
+
+
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.10.2'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -29,15 +36,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
-
     implementation 'com.google.android.material:material:1.3.0'
-
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-
-    implementation project(path: ':pplayer')
 }
