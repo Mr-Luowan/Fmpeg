@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lis.fmpeg.audio.AudioActivity;
 import com.lis.fmpeg.ffmpeg.NativeWindowPlayActivity;
 import com.lis.fmpeg.harddecode.GLVideoActivity;
 import com.lis.fmpeg.harddecode.MediaCodecDecodeActivity;
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openGLMediaCodecDecode(View v) {
         startActivity(new Intent(MainActivity.this, GLVideoActivity.class));
+    }
+    public void audioDealPage(View v) {
+        startActivity(new Intent(MainActivity.this, AudioActivity.class));
     }
 
 }

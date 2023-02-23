@@ -36,5 +36,12 @@
         app:layout_constraintTop_toBottomOf="@id/btn2"
         android:text="MediaCodec解码OPENGL播放"
         android:onClick="openGLMediaCodecDecode"/>
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn3"
+        android:text="音频播放"
+        android:onClick="audioDealPage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
