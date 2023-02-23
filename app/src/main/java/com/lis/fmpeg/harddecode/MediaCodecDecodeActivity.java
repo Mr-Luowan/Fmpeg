@@ -11,13 +11,14 @@ import com.lis.fmpeg.R;
 
 public class MediaCodecDecodeActivity extends AppCompatActivity {
     private static final String TAG = "MediaCodecDecode";
-    private final String mVideoPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/video/one_piece.mp4";
+    private String mVideoPath;
     private HardDecode mHardDecode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_codec_decode);
+        mVideoPath = getExternalFilesDir(null).getAbsolutePath() + "/video/one_piece.mp4";
         SurfaceView surfaceView = findViewById(R.id.surface_view);
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override

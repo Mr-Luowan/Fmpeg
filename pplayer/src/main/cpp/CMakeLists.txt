@@ -14,6 +14,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/player
         ${CMAKE_SOURCE_DIR}/player/decoder
         ${CMAKE_SOURCE_DIR}/player/render/video
+        ${CMAKE_SOURCE_DIR}/opensl
 )
 
 
@@ -80,6 +81,7 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/player/*.cpp
         ${CMAKE_SOURCE_DIR}/player/decoder/*.cpp
         ${CMAKE_SOURCE_DIR}/player/render/video/NativeRender.cpp
+        ${CMAKE_SOURCE_DIR}/opensl/AudioEngine.h
         native-lib.cpp
         )
 
@@ -122,11 +124,7 @@ set(native-libs
 
 target_link_libraries(
         fmpeg
-
         # 4. 连接 FFmpeg 相关的库
         ${third_libs}
-
-
         ${native-libs}
-
         ${log-lib})
