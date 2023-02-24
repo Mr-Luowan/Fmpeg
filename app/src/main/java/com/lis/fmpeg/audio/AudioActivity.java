@@ -8,17 +8,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lis.fmpeg.R;
-
-import java.io.File;
+import com.lis.pplayer.NativePCMPlayer;
 
 public class AudioActivity extends AppCompatActivity {
     private static final String TAG = "AudioActivity";
     private AudioRecorder mAudioRecorder;
+    private NativePCMPlayer mNativePCMPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audioo);
+        setContentView(R.layout.activity_audio);
     }
 
     public void playPCMVoice(View v) {
@@ -30,11 +30,6 @@ public class AudioActivity extends AppCompatActivity {
 
     public void recordPCMVoice(View v) {
         String pcmFilePath = getExternalFilesDir(null).getPath() + "/audio/MyTestPCM.pcm";
-        File tempFile = new File(pcmFilePath);
-        if (tempFile.exists()) {
-            boolean delete = tempFile.delete();
-            Log.d(TAG, "recordPCMVoice: is delete = " + delete);
-        }
         if (mAudioRecorder == null) {
             mAudioRecorder = new AudioRecorder(this);
             mAudioRecorder.createAudioRecorder(pcmFilePath);
@@ -48,4 +43,30 @@ public class AudioActivity extends AppCompatActivity {
         }
     }
 
+    public void native_playPCMVoice(View v) {
+        String pcmFilePath = getExternalFilesDir(null).getPath() + "/audio/MyTestPCM.pcm";
+        mNativePCMPlayer = new NativePCMPlayer();
+        mNativePCMPlayer.playPCMVoice(pcmFilePath);
+        NativePCMPlayer.PlayStatus status = mNativePCMPlayer.getStatus();
+        Log.i(TAG, "播放器状态 status =  " + status);
+    }
+
+    public void native_pausePCMVoice(View v) {
+        NativePCMPlayer.PlayStatus status = mNativePCMPlayer.getStatus();
+        if (status == NativePCMPlayer.PlayStatus.SL_PLAYSTATE_PLAYING) {
+            mNativePCMPlayer.pausePCMVoice();
+            ((TextView)v).setText("C++继续播放PCM");
+        } else {
+            mNativePCMPlayer.reStartNativePlayer();
+            ((TextView)v).setText("C++暂停播放PCM");
+
+        }
+        Log.i(TAG, "播放器状态 status =  " + status);
+    }
+
+    public void native_stopPCMVoice(View v) {
+        mNativePCMPlayer.stopPCMVoice();
+        NativePCMPlayer.PlayStatus status = mNativePCMPlayer.getStatus();
+        Log.i(TAG, "播放器状态 status =  " + status);
+    }
 }

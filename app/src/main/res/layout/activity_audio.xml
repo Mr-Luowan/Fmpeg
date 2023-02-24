@@ -21,4 +21,19 @@
         android:text="开始录制"
         android:onClick="recordPCMVoice"/>
 
+    <Button
+        android:id="@+id/audio_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/audio_2"
+        android:text="C++播放PCM"
+        android:onClick="native_playPCMVoice"/>
+    <Button
+        android:id="@+id/audio_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/audio_3"
+        android:text="C++暂停播放PCM"
+        android:onClick="native_pausePCMVoice"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

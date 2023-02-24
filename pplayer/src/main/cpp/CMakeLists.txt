@@ -81,7 +81,7 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/player/*.cpp
         ${CMAKE_SOURCE_DIR}/player/decoder/*.cpp
         ${CMAKE_SOURCE_DIR}/player/render/video/NativeRender.cpp
-        ${CMAKE_SOURCE_DIR}/opensl/AudioEngine.h
+        ${CMAKE_SOURCE_DIR}/opensl/*.cpp
         native-lib.cpp
         )
 
