@@ -15,6 +15,8 @@ import com.lis.fmpeg.audio.AudioActivity;
 import com.lis.fmpeg.ffmpeg.NativeWindowPlayActivity;
 import com.lis.fmpeg.harddecode.GLVideoActivity;
 import com.lis.fmpeg.harddecode.MediaCodecDecodeActivity;
+import com.lis.fmpeg.opengl.GLESActivity;
+import com.lis.fmpeg.opengl.OpenGLVideoActivity;
 import com.lis.fmpeg.utils.CommonUtils;
 import com.lis.pplayer.FfmpegUtils;
 
@@ -44,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
         if (!hasPermissionsGranted(REQUEST_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, REQUEST_PERMISSIONS, PERMISSION_REQUEST_CODE);
         }
-        
-        CommonUtils.copyAssetsDirToPhone(this, "video", getExternalFilesDir(null).getPath());
+        //CommonUtils.copyAssetsDirToPhone(this, "video", getExternalFilesDir(null).getPath());
     }
 
     private boolean hasPermissionsGranted(String[] permissions) {
@@ -69,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void audioDealPage(View v) {
         startActivity(new Intent(MainActivity.this, AudioActivity.class));
+    }
+    public void goNativeOpenglESPage(View v) {
+        startActivity(new Intent(MainActivity.this, OpenGLVideoActivity.class));
+    }
+    public void goGLESPage(View v) {
+        startActivity(new Intent(MainActivity.this, GLESActivity.class));
     }
 
 }

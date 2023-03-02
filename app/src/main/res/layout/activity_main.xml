@@ -43,5 +43,19 @@
         app:layout_constraintTop_toBottomOf="@id/btn3"
         android:text="音频播放"
         android:onClick="audioDealPage"/>
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn4"
+        android:text="native_openglES播放"
+        android:onClick="goNativeOpenglESPage"/>
+    <Button
+        android:id="@+id/btn6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn5"
+        android:text="openglES_demo"
+        android:onClick="goGLESPage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

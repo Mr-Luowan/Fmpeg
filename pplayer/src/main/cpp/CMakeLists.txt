@@ -15,6 +15,9 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/player/decoder
         ${CMAKE_SOURCE_DIR}/player/render/video
         ${CMAKE_SOURCE_DIR}/opensl
+        ${CMAKE_SOURCE_DIR}/gles
+        ${CMAKE_SOURCE_DIR}/utils
+        ${CMAKE_SOURCE_DIR}/glm
 )
 
 
@@ -76,12 +79,12 @@ set_target_properties( h264
         ${ffmpeg_lib_dir}/libh264.so )
 
 file(GLOB src-files
-        ${CMAKE_SOURCE_DIR}/utils/logUtils.h
-        ${CMAKE_SOURCE_DIR}/utils/NativeImage.h
         ${CMAKE_SOURCE_DIR}/player/*.cpp
         ${CMAKE_SOURCE_DIR}/player/decoder/*.cpp
         ${CMAKE_SOURCE_DIR}/player/render/video/NativeRender.cpp
         ${CMAKE_SOURCE_DIR}/opensl/*.cpp
+        ${CMAKE_SOURCE_DIR}/gles/*.cpp
+        ${CMAKE_SOURCE_DIR}/utils/*.cpp
         native-lib.cpp
         )
 
@@ -95,7 +98,6 @@ add_library(
 # 查找代码中使用到的系统库
 find_library(
         log-lib
-
         log)
 
 
@@ -117,8 +119,6 @@ set(native-libs
         EGL
         GLESv3
         OpenSLES
-        m
-        z
         )
 
 

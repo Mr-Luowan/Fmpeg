@@ -180,13 +180,13 @@ void DecoderBase::decodingLoop() {
         while (mDecoderState == STATE_PAUSE) {
             std::unique_lock<std::mutex> lock(mMutex);
             mCond.wait_for(lock, std::chrono::milliseconds(10));
-            mStartTimeStamp = getSysCurrentTime() - mCurTimeStamp;
+            mStartTimeStamp = GetSysCurrentTime() - mCurTimeStamp;
         }
         if (mDecoderState == STATE_STOP) {
             break;
         }
         if (mStartTimeStamp == -1) {
-            mStartTimeStamp = getSysCurrentTime();
+            mStartTimeStamp = GetSysCurrentTime();
         }
         if (decodeOnePacket() != 0) {
             //解码结束，暂停解码器
@@ -211,7 +211,7 @@ void DecoderBase::updateTimeStamp() {
             (mCurTimeStamp * av_q2d(mAVFormatContext->streams[mStreamIndex]->time_base)) * 1000);
     LOGI(TAG, "updateTimeStamp__::mCurTimeStamp ms--> %ld", mCurTimeStamp)
     if (mSeekPosition > 0 && mSeekSuccess) {
-        mStartTimeStamp = getSysCurrentTime() - mCurTimeStamp;
+        mStartTimeStamp = GetSysCurrentTime() - mCurTimeStamp;
         mSeekPosition = 0;
         mSeekSuccess = false;
     }
@@ -219,7 +219,7 @@ void DecoderBase::updateTimeStamp() {
 
 long DecoderBase::doAVSync() {
     LOGI(TAG, "doAVSync__音视频同步")
-    long curSysTime = getSysCurrentTime();
+    long curSysTime = GetSysCurrentTime();
     LOGI(TAG, "doAVSync__curSysTime ==> %ld", curSysTime)
     //基于系统时钟计算从开始播放流逝的时间
     LOGI(TAG, "doAVSync__mCurTimeStamp ==> %ld", mCurTimeStamp)
@@ -236,7 +236,6 @@ long DecoderBase::doAVSync() {
         //限制休眠时间不能过长
         sleepTime = sleepTime > DELAY_THRESHOLD ? DELAY_THRESHOLD : sleepTime;
         av_usleep(sleepTime * 1000);
-        LOGI(TAG, "doAVSync__休眠时间sleepTime ==> %ld", sleepTime)
     }
     delay = elapsedTime - mCurTimeStamp;
     return delay;

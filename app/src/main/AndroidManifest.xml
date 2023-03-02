@@ -9,9 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-feature
-        android:glEsVersion="0x00020000"
-        android:required="true" />
+    <uses-feature android:glEsVersion="0x00030002" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +18,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fmpeg">
-
+        <activity
+            android:name=".opengl.GLESActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".opengl.OpenGLVideoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".audio.AudioActivity"
             android:exported="true" />
