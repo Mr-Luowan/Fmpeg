@@ -170,27 +170,24 @@ Java_com_lis_pplayer_YUVPlay_onDestory(JNIEnv *env, jobject thiz) {
 }
 
 JNIEXPORT void JNICALL native_OnInit(JNIEnv *env, jobject instance) {
+    MyGLRenderContext::GetInstance();
 }
 
 JNIEXPORT void JNICALL native_OnUnInit(JNIEnv *env, jobject instance) {
+    MyGLRenderContext::DestroyInstance();
 }
-unsigned int program;
-TriangleSample* triangleSample;
 
 JNIEXPORT void JNICALL native_OnSurfaceCreated(JNIEnv *env, jobject instance) {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-    triangleSample = new TriangleSample();
-    triangleSample->init();
+    MyGLRenderContext::GetInstance()->OnSurfaceCreated();
 }
 
 JNIEXPORT void JNICALL
 native_OnSurfaceChanged(JNIEnv *env, jobject instance, jint width, jint height) {
-    glViewport(0, 0, width, height);
+    MyGLRenderContext::GetInstance()->OnSurfaceCreated();
 }
 
 JNIEXPORT void JNICALL native_OnDrawFrame(JNIEnv *env, jobject instance) {
-    triangleSample->draw(0,0);
+    MyGLRenderContext::GetInstance()->OnDrawFrame();
 }
 
 static JNINativeMethod g_RenderMethods[] = {

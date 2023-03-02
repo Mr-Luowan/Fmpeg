@@ -16,7 +16,6 @@ MyGLRenderContext::~MyGLRenderContext() {
 }
 
 MyGLRenderContext *MyGLRenderContext::GetInstance() {
-    LOGD(TAG, "GetInstance");
     if (m_pContext == nullptr) {
         m_pContext = new MyGLRenderContext();
     }
@@ -33,9 +32,11 @@ void MyGLRenderContext::DestroyInstance() {
 
 void MyGLRenderContext::OnSurfaceCreated() {
     LOGD(TAG, "MyGLRenderContext::OnSurfaceCreated");
-    glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
-    triangleSample = new TriangleSample();
-
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+//    triangleSample = new TriangleSample();
+//    triangleSample->init();
+    doubleTriangleSample = new DoubleTriangleSample();
+    doubleTriangleSample->init();
     LOGD(TAG, "MyGLRenderContext::OnSurfaceCreated Over");
 }
 
@@ -44,12 +45,11 @@ void MyGLRenderContext::OnSurfaceChanged(int width, int height) {
     glViewport(0,0,width,height);
     m_ScreenW = width;
     m_ScreenH = height;
+    LOGD(TAG, "MyGLRenderContext::OnSurfaceChanged Over");
 }
 
 void MyGLRenderContext::OnDrawFrame() {
-    LOGD(TAG, "MyGLRenderContext::OnDrawFrame");
-    if (triangleSample) {
-        triangleSample->init();
-    }
-    //triangleSample->draw(m_ScreenW, m_ScreenH);
+    glClear(GL_COLOR_BUFFER_BIT);
+//   triangleSample->draw(m_ScreenW, m_ScreenH);
+    doubleTriangleSample->draw(m_ScreenW,m_ScreenH);
 }

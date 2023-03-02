@@ -6,6 +6,7 @@
 #define FMPEG_MYGLRENDERCONTEXT_H
 #include <GLES3/gl3.h>
 #include "TriangleSample.h"
+#include "DoubleTriangleSample.h"
 
 class MyGLRenderContext {
 
@@ -13,7 +14,8 @@ private:
     static MyGLRenderContext *m_pContext;
     int m_ScreenW;
     int m_ScreenH;
-    TriangleSample* triangleSample;
+//    TriangleSample* triangleSample;
+    DoubleTriangleSample* doubleTriangleSample;
 
 public:
 
