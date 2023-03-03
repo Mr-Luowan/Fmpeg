@@ -18,6 +18,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/gles
         ${CMAKE_SOURCE_DIR}/utils
         ${CMAKE_SOURCE_DIR}/glm
+        ${CMAKE_SOURCE_DIR}/stbi_img
 )
 
 
@@ -85,6 +86,7 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/opensl/*.cpp
         ${CMAKE_SOURCE_DIR}/gles/*.cpp
         ${CMAKE_SOURCE_DIR}/utils/*.cpp
+        ${CMAKE_SOURCE_DIR}/stbi_img/*.cpp
         native-lib.cpp
         )
 

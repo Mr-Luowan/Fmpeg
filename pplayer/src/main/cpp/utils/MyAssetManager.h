@@ -32,7 +32,11 @@ public:
 
     void setAssetManager(AAssetManager *manager);
 
+    AAssetManager *getAssetManager() const;
+
     void readAssetFile(const char* fileName, std::string &content);
+
+    unsigned char * readPicture(const char* fileName, long& fileLength);
 };
 
 

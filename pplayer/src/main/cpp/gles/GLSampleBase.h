@@ -11,6 +11,7 @@ protected:
     unsigned int m_iProgramObj;
     int m_SurfaceWidth;
     int m_SurfaceHeight;
+    unsigned int VAO;
 
 public:
     GLSampleBase() :

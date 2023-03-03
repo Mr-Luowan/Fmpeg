@@ -7,6 +7,7 @@
 #include <GLES3/gl3.h>
 #include "TriangleSample.h"
 #include "DoubleTriangleSample.h"
+#include "PictureSample.h"
 
 class MyGLRenderContext {
 
@@ -14,8 +15,9 @@ private:
     static MyGLRenderContext *m_pContext;
     int m_ScreenW;
     int m_ScreenH;
-    TriangleSample* triangleSample;
+//    TriangleSample* triangleSample;
 //    DoubleTriangleSample* doubleTriangleSample;
+    PictureSample* pictureSample;
 
 public:
 
