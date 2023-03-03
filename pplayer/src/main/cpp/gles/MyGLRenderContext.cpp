@@ -33,6 +33,9 @@ void MyGLRenderContext::DestroyInstance() {
 void MyGLRenderContext::OnSurfaceCreated() {
     LOGD(TAG, "MyGLRenderContext::OnSurfaceCreated");
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    int nrAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+    LOGD(TAG, "最大可用的四分量顶点数目 %d ", nrAttributes)
 //    triangleSample = new TriangleSample();
 //    triangleSample->init();
     doubleTriangleSample = new DoubleTriangleSample();

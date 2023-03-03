@@ -1,5 +1,7 @@
 #include <jni.h>
 #include <string>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
 #include "utils/logUtils.h"
 #include "player/PlayerWrapper.h"
 #include "opensl/OpenSLAudioPlay.h"
