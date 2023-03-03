@@ -36,10 +36,10 @@ void MyGLRenderContext::OnSurfaceCreated() {
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
     LOGD(TAG, "最大可用的四分量顶点数目 %d ", nrAttributes)
-//    triangleSample = new TriangleSample();
-//    triangleSample->init();
-    doubleTriangleSample = new DoubleTriangleSample();
-    doubleTriangleSample->init();
+    triangleSample = new TriangleSample();
+    triangleSample->init();
+//    doubleTriangleSample = new DoubleTriangleSample();
+//    doubleTriangleSample->init();
     LOGD(TAG, "MyGLRenderContext::OnSurfaceCreated Over");
 }
 
@@ -53,6 +53,6 @@ void MyGLRenderContext::OnSurfaceChanged(int width, int height) {
 
 void MyGLRenderContext::OnDrawFrame() {
     glClear(GL_COLOR_BUFFER_BIT);
-//   triangleSample->draw(m_ScreenW, m_ScreenH);
-    doubleTriangleSample->draw(m_ScreenW,m_ScreenH);
+    triangleSample->draw(m_ScreenW, m_ScreenH);
+//    doubleTriangleSample->draw(m_ScreenW,m_ScreenH);
 }

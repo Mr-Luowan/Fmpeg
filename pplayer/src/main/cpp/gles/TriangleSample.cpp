@@ -12,19 +12,7 @@
 
 void TriangleSample::init() {
     FUN_BEGIN_TIME("TriangleSample::init")
-        const char *vertexShaderSource = "#version 300 es\n"
-                                         "layout (location = 0) in vec3 vPosition;\n"
-                                         "void main() {\n"
-                                         "     gl_Position  = vec4(vPosition, 1.0f);\n"
-                                         "     gl_PointSize = 10.0;\n"
-                                         "}\n";
-        const char *fragmentShaderSource = "#version 300 es\n"
-                                           "precision mediump float;\n"
-                                           "out vec4 fragColor;\n"
-                                           "void main() {\n"
-                                           "     fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                           "}\n";
-        shaderProgram = GLTools::initProgram(vertexShaderSource, fragmentShaderSource);
+        shaderProgram = GLTools::initProgram("Triangle.vsh", "Triangle.fsh");
         float vertices[] = {
                 -0.5f, -0.5f, 0.0f, // left bottom
                 0.5f, -0.5f, 0.0f, // right bottom

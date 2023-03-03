@@ -14,8 +14,8 @@ private:
     static MyGLRenderContext *m_pContext;
     int m_ScreenW;
     int m_ScreenH;
-//    TriangleSample* triangleSample;
-    DoubleTriangleSample* doubleTriangleSample;
+    TriangleSample* triangleSample;
+//    DoubleTriangleSample* doubleTriangleSample;
 
 public:
 

@@ -8,6 +8,8 @@
 #include "PlayCallback.h"
 #include "gles_play.h"
 #include "MyGLRenderContext.h"
+#include "EnvManager.h"
+#include "MyAssetManager.h"
 
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -185,7 +187,7 @@ JNIEXPORT void JNICALL native_OnSurfaceCreated(JNIEnv *env, jobject instance) {
 
 JNIEXPORT void JNICALL
 native_OnSurfaceChanged(JNIEnv *env, jobject instance, jint width, jint height) {
-    MyGLRenderContext::GetInstance()->OnSurfaceCreated();
+    MyGLRenderContext::GetInstance()->OnSurfaceChanged(width, height);
 }
 
 JNIEXPORT void JNICALL native_OnDrawFrame(JNIEnv *env, jobject instance) {
@@ -231,6 +233,7 @@ extern "C" jint JNI_OnLoad(JavaVM *jvm, void *p) {
     if (regRet != JNI_TRUE) {
         return JNI_ERR;
     }
+    EnvManager::getInstance()->setGlobalJvm(jvm);
     return JNI_VERSION_1_6;
 }
 extern "C" void JNI_OnUnload(JavaVM *jvm, void *p) {
@@ -239,5 +242,14 @@ extern "C" void JNI_OnUnload(JavaVM *jvm, void *p) {
         return;
     }
 
+    EnvManager::getInstance()->setGlobalJvm(nullptr);
     UnregisterNativeMethods(env, NATIVE_RENDER_CLASS_NAME);
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_lis_fmpeg_MainActivity_setNativeAssetsManager(JNIEnv *env, jobject thiz,
+                                                       jobject assets_manager) {
+    AAssetManager *assetManager = AAssetManager_fromJava(env, assets_manager);
+    MyAssetManager::getInstance()->setAssetManager(assetManager);
 }

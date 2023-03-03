@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(FfmpegUtils.getFFmpegVersion());
+        setNativeAssetsManager(getAssets());
     }
 
 
@@ -77,5 +79,8 @@ public class MainActivity extends AppCompatActivity {
     public void goGLESPage(View v) {
         startActivity(new Intent(MainActivity.this, GLESActivity.class));
     }
+
+
+    public native void setNativeAssetsManager(AssetManager assetsManager);
 
 }

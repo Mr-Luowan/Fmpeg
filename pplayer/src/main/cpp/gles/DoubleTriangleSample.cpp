@@ -22,22 +22,7 @@ void DoubleTriangleSample::init() {
     unsigned int indices[] = {0, 1, 2, 2, 3, 4};
 
     FUN_BEGIN_TIME("TriangleSample::init")
-        const char *vertexShaderSource = "#version 300 es\n"
-                                         "layout (location = 0) in vec2 vPosition;\n"
-                                         "layout (location = 1) in vec3 aColor;\n"
-                                         "out vec3 oColor;\n"
-                                         "void main() {\n"
-                                         "     gl_Position = vec4(vPosition, 0.0f, 1.0f);\n"
-                                         "     oColor = aColor;\n"
-                                         "}\n";
-        const char *fragmentShaderSource = "#version 300 es\n"
-                                           "precision mediump float;\n"
-                                           "out vec4 fragColor;\n"
-                                           "in vec3 oColor;\n"
-                                           "void main() {\n"
-                                           "     fragColor = vec4(oColor, 1.0f);\n"
-                                           "}\n";
-        m_iProgramObj = GLTools::initProgram(vertexShaderSource, fragmentShaderSource);
+        m_iProgramObj = GLTools::initProgram("doubleTriangle.vsh", "doubleTriangle.fsh");
         unsigned int VBO;
         unsigned int EBO;
         //生成一个顶点数组对象

@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include "MyAssetManager.h"
 #include "logUtils.h"
 
 class GLTools {
@@ -26,12 +27,12 @@ public:
         return textureIDs[0];
     }
 
-    static int initProgram(const char *vshSource, const char *fragSource) {
+    static int initProgram(const char *vshFileName, const char *fragFileName) {
         int success;
         char infoLog[512];
         int program = glCreateProgram();
-        int vshShader = initShader(vshSource, GL_VERTEX_SHADER);
-        int fragShader = initShader(fragSource, GL_FRAGMENT_SHADER);
+        int vshShader = initShader(vshFileName, GL_VERTEX_SHADER);
+        int fragShader = initShader(fragFileName, GL_FRAGMENT_SHADER);
         glAttachShader(program, vshShader);
         glAttachShader(program, fragShader);
         glLinkProgram(program);
@@ -40,7 +41,7 @@ public:
         glGetProgramiv(program, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(program, 512, NULL, infoLog);
-            LOGD(TAG, "ERROR::SHADER::PROGRAM::LINKING_FAILED %s", infoLog)
+            LOGE(TAG, "ERROR::SHADER::PROGRAM::LINKING_FAILED %s", infoLog)
         }
         glDeleteShader(vshShader);
         glDeleteShader(fragShader);
@@ -48,41 +49,13 @@ public:
     }
 
 private:
-    static int getShaderFromFile(const char *vertexPath, const char *fragmentPath) {
-        // 1. 从文件路径中获取顶点/片段着色器
-        std::string vertexCode;
-        std::string fragmentCode;
-        std::ifstream vShaderFile;
-        std::ifstream fShaderFile;
-        // 保证ifstream对象可以抛出异常：
-        vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        // 打开文件
-        vShaderFile.open(vertexPath);
-        fShaderFile.open(fragmentPath);
-        try {
-            std::stringstream vShaderStream, fShaderStream;
-            // 读取文件的缓冲内容到数据流中
-            vShaderStream << vShaderFile.rdbuf();
-            fShaderStream << fShaderFile.rdbuf();
-            // 关闭文件处理器
-            vShaderFile.close();
-            fShaderFile.close();
-            // 转换数据流到string
-            vertexCode   = vShaderStream.str();
-            fragmentCode = fShaderStream.str();
-        } catch (std::ifstream::failure e) {
-            LOGE(TAG, "error read shader from file")
-        }
-        const char* vShaderCode = vertexCode.c_str();
-        const char* fShaderCode = fragmentCode.c_str();
-        LOGE(TAG, "vertex code = %s", vShaderCode)
-        LOGE(TAG, "fragment code = %s", fShaderCode)
-    }
 
-    static int initShader(const char *source, int type) {
+    static int initShader(const char *fileName, int type) {
         int shader = glCreateShader(type);
-        glShaderSource(shader, 1, &source, 0);
+        std::string code;
+        MyAssetManager::getInstance()->readAssetFile(fileName, code);
+        const char* c_sCode = code.c_str();
+        glShaderSource(shader, 1, &c_sCode, 0);
         glCompileShader(shader);
         int success;
         char infoLog[512];
@@ -93,7 +66,7 @@ private:
             if (type == GL_FRAGMENT_SHADER) {
                 typeStr = "GL_FRAGMENT_SHADER";
             }
-            LOGD(TAG, "ERROR:: %s SHADER::initShader::COMPILATION_FAILED %s", typeStr, infoLog)
+            LOGE(TAG, "ERROR:: %s SHADER::initShader::COMPILATION_FAILED %s", typeStr, infoLog)
         }
         return shader;
     }
