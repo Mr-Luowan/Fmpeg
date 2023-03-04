@@ -51,7 +51,7 @@ void PictureSample::init() {
     int height = 0;
     int nrChannels = 0;
     long fileLength;
-    unsigned char * fileData = MyAssetManager::getInstance()->readPicture("flower.jpg", fileLength);
+    unsigned char * fileData = MyAssetManager::getInstance()->readPicture("img/container.jpg", fileLength);
     unsigned char* image = stbi_load_from_memory(fileData, fileLength, &width, &height, &nrChannels, 0);
     delete[] fileData;
     LOGE(TAG, "图片宽高 %d %d" , width, height)
