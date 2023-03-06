@@ -32,6 +32,22 @@ void testGlm() {
     LOGD("testGlm", " x = %f, y = %f, z = %f", vec.x, vec.y, vec.z)
 }
 
+void testCallJavaMethod() {
+    int attach;
+    JNIEnv *env = EnvManager::getInstance()->getCurrentEnv(&attach);
+    if (env != nullptr) {
+        jclass clazz = env->FindClass("com/lis/pplayer/util/ResourceUtils");
+        jmethodID getPicDataMethod = env->GetStaticMethodID(clazz, "getPicData", "(Ljava/lang/String;)[B");
+        jstring str = env->NewStringUTF("flower");
+        auto byteArray =  (jbyteArray)env->CallStaticObjectMethod(clazz,getPicDataMethod, str);
+        jsize length = env->GetArrayLength(byteArray);
+        auto* buf = new uint8_t[length];
+        env->GetByteArrayRegion(byteArray, 0, length, reinterpret_cast<jbyte*>(buf));
+        env->DeleteLocalRef(clazz);
+        env->DeleteLocalRef(str);
+    }
+}
+
 
 extern "C"
 JNIEXPORT jstring JNICALL
@@ -198,6 +214,7 @@ JNIEXPORT void JNICALL native_OnUnInit(JNIEnv *env, jobject instance) {
 JNIEXPORT void JNICALL native_OnSurfaceCreated(JNIEnv *env, jobject instance) {
     MyGLRenderContext::GetInstance()->OnSurfaceCreated();
     testGlm();
+    testCallJavaMethod();
 }
 
 JNIEXPORT void JNICALL
