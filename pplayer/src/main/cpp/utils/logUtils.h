@@ -35,6 +35,11 @@ static const char *TAG = "LPF_TEST";
     long long t1 = GetSysCurrentTime(); \
     LOGCATE("%s func cost time %ldms", FUN, (long)(t1-t0));}
 
+static long getCurTime() {
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    return time.tv_sec;
+}
 static long long GetSysCurrentTime()
 {
     struct timeval time;

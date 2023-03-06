@@ -2,6 +2,10 @@
 #include <string>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
+//矩阵运算库
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 #include "utils/logUtils.h"
 #include "player/PlayerWrapper.h"
 #include "opensl/OpenSLAudioPlay.h"
@@ -18,6 +22,16 @@ extern "C" {
 #define NATIVE_RENDER_CLASS_NAME "com/lis/pplayer/gles3/NativeRender"
 
 FILE *pcmFile;
+
+void testGlm() {
+    //向量（1，0，0） 位移 （1，1，0）个单位
+    glm::vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
+    vec = trans * vec;
+    LOGD("testGlm", " x = %f, y = %f, z = %f", vec.x, vec.y, vec.z)
+}
+
 
 extern "C"
 JNIEXPORT jstring JNICALL
@@ -183,6 +197,7 @@ JNIEXPORT void JNICALL native_OnUnInit(JNIEnv *env, jobject instance) {
 
 JNIEXPORT void JNICALL native_OnSurfaceCreated(JNIEnv *env, jobject instance) {
     MyGLRenderContext::GetInstance()->OnSurfaceCreated();
+    testGlm();
 }
 
 JNIEXPORT void JNICALL
