@@ -23,6 +23,9 @@ public:
     virtual void draw(int width, int height);
 
     virtual void destroy();
+
+    void OnSurfaceChanged(int width, int height) override;
+
 };
 
 

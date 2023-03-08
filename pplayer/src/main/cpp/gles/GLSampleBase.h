@@ -24,6 +24,11 @@ public:
     virtual void draw(int width, int height) = 0;
 
     virtual void destroy() = 0;
+
+    virtual void OnSurfaceChanged(int width, int height) {
+        m_SurfaceWidth = width;
+        m_SurfaceHeight = height;
+    }
 };
 
 #endif //FMPEG_GLSAMPLEBASE_H

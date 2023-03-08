@@ -50,11 +50,12 @@ void MyGLRenderContext::OnSurfaceChanged(int width, int height) {
     glViewport(0,0,width,height);
     m_ScreenW = width;
     m_ScreenH = height;
+    pictureSample->OnSurfaceChanged(width, height);
     LOGD(TAG, "MyGLRenderContext::OnSurfaceChanged Over");
 }
 
 void MyGLRenderContext::OnDrawFrame() {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    triangleSample->draw(m_ScreenW, m_ScreenH);
 //    doubleTriangleSample->draw(m_ScreenW,m_ScreenH);
     pictureSample->draw(m_ScreenW, m_ScreenH);

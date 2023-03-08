@@ -7,7 +7,9 @@
 
 unsigned int texture;
 unsigned int texture2;
-glm::mat4 trans;
+glm::mat4 model;    //模型矩阵
+glm::mat4 view;     //视图矩阵
+glm::mat4 projection;   //投影矩阵
 
 void PictureSample::init() {
     m_iProgramObj = GLTools::initProgram("texture.vsh", "texture.fsh");
@@ -74,28 +76,38 @@ void PictureSample::init() {
     glUniform1i(glGetUniformLocation(m_iProgramObj, "texture1"), 0);
     glUniform1i(glGetUniformLocation(m_iProgramObj, "texture2"), 1);
 
-    //glEnable(GL_BLEND); // 开启颜色混合
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // 设置颜色混合模式
+    glEnable(GL_BLEND); // 开启颜色混合
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // 设置颜色混合模式
+
+    glEnable(GL_DEPTH_TEST);
 }
-int i = 0;
+
+void PictureSample::OnSurfaceChanged(int width, int height) {
+    GLSampleBase::OnSurfaceChanged(width, height);
+
+    model = glm::mat4(1.0f);
+    view = glm::mat4(1.0f);
+    projection = glm::mat4(1.0f);
+
+    model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(0.0f,0.0f,0.0f));
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    projection = glm::perspective(glm::radians(45.0f),
+                                  (float) m_SurfaceWidth / (float) m_SurfaceHeight, 0.1f, 100.0f);
+    projection = projection * view * model;
+}
+
 void PictureSample::draw(int width, int height) {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, texture2);
 
-    trans = glm::mat4(1.0f);
-    if (i > 360) {
-        i = i;
-    }
-    i++;
-    trans = glm::rotate(trans, glm::radians(i * 1.0F), glm::vec3(0.0, 0.0, 1.0));
-//    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+
     //第三个参数询问我们是否希望对我们的矩阵进行转置(Transpose)
-
-
     glUseProgram(m_iProgramObj);
-    glUniformMatrix4fv(glGetUniformLocation(m_iProgramObj, "transform"),1, false, glm::value_ptr(trans));
+    glUniformMatrix4fv(glGetUniformLocation(m_iProgramObj, "transform"), 1, false,
+                       glm::value_ptr(projection));
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
@@ -103,3 +115,4 @@ void PictureSample::draw(int width, int height) {
 void PictureSample::destroy() {
 
 }
+

@@ -17,7 +17,7 @@ private:
     int m_ScreenH;
 //    TriangleSample* triangleSample;
 //    DoubleTriangleSample* doubleTriangleSample;
-    PictureSample* pictureSample;
+    GLSampleBase* pictureSample;
 
 public:
 
