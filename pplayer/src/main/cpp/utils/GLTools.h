@@ -21,9 +21,14 @@ class GLTools {
 
 public:
 
-    static unsigned int createOESTexture() {
+    static unsigned int createTexture() {
         unsigned int textureIDs[1] = {0};
         glGenTextures(1, textureIDs);
+        glBindTexture(GL_TEXTURE_2D, textureIDs[0]);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         return textureIDs[0];
     }
 
@@ -62,7 +67,7 @@ private:
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(shader, 512, NULL, infoLog);
-            char *typeStr = "GL_VERTEX_SHADER";
+            char const *typeStr = "GL_VERTEX_SHADER";
             if (type == GL_FRAGMENT_SHADER) {
                 typeStr = "GL_FRAGMENT_SHADER";
             }
