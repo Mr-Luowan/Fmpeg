@@ -33,14 +33,7 @@ void MyGLRenderContext::DestroyInstance() {
 void MyGLRenderContext::OnSurfaceCreated() {
     LOGD(TAG, "MyGLRenderContext::OnSurfaceCreated");
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    int nrAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    LOGD(TAG, "最大可用的四分量顶点数目 %d ", nrAttributes)
-//    triangleSample = new TriangleSample();
-//    triangleSample->init();
-//    doubleTriangleSample = new DoubleTriangleSample();
-//    doubleTriangleSample->init();
-    pictureSample->init();
+    glSampleBase->init();
     LOGD(TAG, "MyGLRenderContext::OnSurfaceCreated Over");
 }
 
@@ -49,29 +42,56 @@ void MyGLRenderContext::OnSurfaceChanged(int width, int height) {
     glViewport(0,0,width,height);
     m_ScreenW = width;
     m_ScreenH = height;
-    pictureSample->OnSurfaceChanged(width, height);
+    glSampleBase->OnSurfaceChanged(width, height);
     LOGD(TAG, "MyGLRenderContext::OnSurfaceChanged Over");
 }
 
 void MyGLRenderContext::OnDrawFrame() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    triangleSample->draw(m_ScreenW, m_ScreenH);
-//    doubleTriangleSample->draw(m_ScreenW,m_ScreenH);
-    pictureSample->draw(m_ScreenW, m_ScreenH);
+    glSampleBase->draw(m_ScreenW, m_ScreenH);
 }
 
 void MyGLRenderContext::switchContent(int type) {
     switch (type) {
         case 0:{
-            pictureSample = new DoubleTriangleSample();
+            glSampleBase = new DoubleTriangleSample();
             break;
         }
         case 1:{
-            pictureSample = new PictureSample();
+            glSampleBase = new PictureSample();
             break;
         }
         case 2:{
             break;
         }
+        case 3:{
+            glSampleBase = new NV21PicSample();
+            break;
+        }
     }
+}
+
+void MyGLRenderContext::setImageData(jint format, jint width, jint height, uint8_t *imgData) {
+    NativeImage nativeImage;
+    nativeImage.format = format;
+    nativeImage.width = width;
+    nativeImage.height = height;
+    nativeImage.ppPlane[0] = imgData;
+    switch (format)
+    {
+        case IMAGE_FORMAT_NV12:
+        case IMAGE_FORMAT_NV21:
+            nativeImage.ppPlane[1] = nativeImage.ppPlane[0] + width * height;
+            break;
+        case IMAGE_FORMAT_I420:
+            nativeImage.ppPlane[1] = nativeImage.ppPlane[0] + width * height;
+            nativeImage.ppPlane[2] = nativeImage.ppPlane[1] + width * height / 4;
+            break;
+        default:
+            break;
+    }
+    if (glSampleBase) {
+        glSampleBase->LoadImage(&nativeImage);
+    }
+
 }

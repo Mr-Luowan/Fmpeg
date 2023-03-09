@@ -41,4 +41,6 @@ public class NativeRender implements GLSurfaceView.Renderer {
 
     public native void native_switchContent(int index);
 
+    public native void native_setImageData(int format, int width, int height, byte[] buffer);
+
 }

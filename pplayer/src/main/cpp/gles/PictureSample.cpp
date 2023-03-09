@@ -11,6 +11,7 @@ glm::mat4 model;    //模型矩阵
 glm::mat4 view;     //视图矩阵
 glm::mat4 projection;   //投影矩阵
 
+
 void PictureSample::init() {
     m_iProgramObj = GLTools::initProgram("texture.vsh", "texture.fsh");
     float vertices[] = {

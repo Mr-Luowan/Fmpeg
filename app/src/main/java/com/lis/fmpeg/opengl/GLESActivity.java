@@ -15,6 +15,9 @@ import com.lis.fmpeg.R;
 import com.lis.fmpeg.ffmpeg.MySurfaceView;
 import com.lis.pplayer.gles3.MyGLSurfaceView;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class GLESActivity extends AppCompatActivity {
     private static final String TAG = "GLESActivity";
     private MyGLSurfaceView surface;
@@ -52,7 +55,12 @@ public class GLESActivity extends AppCompatActivity {
             }
             case R.id.cube: {
                 Log.d(TAG, "onOptionsItemSelected:  = cube");
-
+                reAddContentView(2);
+                break;
+            }
+            case R.id.nv21pic: {
+                Log.d(TAG, "onOptionsItemSelected:  = nv21pic");
+                reAddContentView(3);
                 break;
             }
         }
@@ -66,4 +74,6 @@ public class GLESActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mRootView.addView(surface, lp);
     }
+
+
 }

@@ -29,7 +29,6 @@ void testGlm() {
     glm::mat4 trans = glm::mat4(1.0f);
     trans = glm::translate(trans, glm::vec3(1.0f, 1.0f, 0.0f));
     vec = trans * vec;
-    LOGD("testGlm", " x = %f, y = %f, z = %f", vec.x, vec.y, vec.z)
 }
 
 void testCallJavaMethod() {
@@ -37,12 +36,13 @@ void testCallJavaMethod() {
     JNIEnv *env = EnvManager::getInstance()->getCurrentEnv(&attach);
     if (env != nullptr) {
         jclass clazz = env->FindClass("com/lis/pplayer/util/ResourceUtils");
-        jmethodID getPicDataMethod = env->GetStaticMethodID(clazz, "getPicData", "(Ljava/lang/String;)[B");
+        jmethodID getPicDataMethod = env->GetStaticMethodID(clazz, "getPicData",
+                                                            "(Ljava/lang/String;)[B");
         jstring str = env->NewStringUTF("flower");
-        auto byteArray =  (jbyteArray)env->CallStaticObjectMethod(clazz,getPicDataMethod, str);
+        auto byteArray = (jbyteArray) env->CallStaticObjectMethod(clazz, getPicDataMethod, str);
         jsize length = env->GetArrayLength(byteArray);
-        auto* buf = new uint8_t[length];
-        env->GetByteArrayRegion(byteArray, 0, length, reinterpret_cast<jbyte*>(buf));
+        auto *buf = new uint8_t[length];
+        env->GetByteArrayRegion(byteArray, 0, length, reinterpret_cast<jbyte *>(buf));
         env->DeleteLocalRef(clazz);
         env->DeleteLocalRef(str);
     }
@@ -230,13 +230,25 @@ JNIEXPORT void JNICALL switchContent(JNIEnv *env, jobject instance, jint index) 
     MyGLRenderContext::GetInstance()->switchContent(index);
 }
 
+JNIEXPORT void JNICALL
+setImageData(JNIEnv *env, jobject instance, jint format, jint width, jint height,
+             jbyteArray imgData) {
+    int len = env->GetArrayLength(imgData);
+    uint8_t *buf = new uint8_t[len];
+    env->GetByteArrayRegion(imgData, 0, len, reinterpret_cast<jbyte *>(buf));
+    MyGLRenderContext::GetInstance()->setImageData(format, width, height, buf);
+    delete[] buf;
+    env->DeleteLocalRef(imgData);
+}
+
 static JNINativeMethod g_RenderMethods[] = {
-        {"native_OnInit",           "()V",   (void *) (native_OnInit)},
-        {"native_OnUnInit",         "()V",   (void *) (native_OnUnInit)},
-        {"native_OnSurfaceCreated", "()V",   (void *) (native_OnSurfaceCreated)},
-        {"native_OnSurfaceChanged", "(II)V", (void *) (native_OnSurfaceChanged)},
-        {"native_OnDrawFrame",      "()V",   (void *) (native_OnDrawFrame)},
-        {"native_switchContent",      "(I)V",   (void *) (switchContent)},
+        {"native_OnInit",           "()V",      (void *) (native_OnInit)},
+        {"native_OnUnInit",         "()V",      (void *) (native_OnUnInit)},
+        {"native_OnSurfaceCreated", "()V",      (void *) (native_OnSurfaceCreated)},
+        {"native_OnSurfaceChanged", "(II)V",    (void *) (native_OnSurfaceChanged)},
+        {"native_OnDrawFrame",      "()V",      (void *) (native_OnDrawFrame)},
+        {"native_switchContent",    "(I)V",     (void *) (switchContent)},
+        {"native_setImageData",     "(III[B)V", (void *) (setImageData)},
 };
 
 static int

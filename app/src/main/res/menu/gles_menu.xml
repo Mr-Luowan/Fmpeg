@@ -9,4 +9,7 @@
     <item android:id="@+id/cube"
         android:title="cube" />
 
+    <item android:id="@+id/nv21pic"
+        android:title="nv21pic" />
+
 </menu>

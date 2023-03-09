@@ -8,6 +8,7 @@
 #include "TriangleSample.h"
 #include "DoubleTriangleSample.h"
 #include "PictureSample.h"
+#include "NV21PicSample.h"
 
 class MyGLRenderContext {
 
@@ -15,9 +16,7 @@ private:
     static MyGLRenderContext *m_pContext;
     int m_ScreenW;
     int m_ScreenH;
-//    TriangleSample* triangleSample;
-//    DoubleTriangleSample* doubleTriangleSample;
-    GLSampleBase* pictureSample;
+    GLSampleBase* glSampleBase;
 
 public:
 
@@ -38,6 +37,8 @@ public:
 
 
     void switchContent(int type);
+
+    void setImageData(jint format, jint width, jint height, uint8_t *imgData);
 };
 
 

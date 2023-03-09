@@ -5,6 +5,8 @@
 #ifndef FMPEG_GLSAMPLEBASE_H
 #define FMPEG_GLSAMPLEBASE_H
 
+#include "NativeImage.h"
+
 class GLSampleBase {
 
 protected:
@@ -29,6 +31,10 @@ public:
         m_SurfaceWidth = width;
         m_SurfaceHeight = height;
     }
+
+    virtual void LoadImage(_tag_NativeImage *pImage) {
+
+    };
 };
 
 #endif //FMPEG_GLSAMPLEBASE_H
