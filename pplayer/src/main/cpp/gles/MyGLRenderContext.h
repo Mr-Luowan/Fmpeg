@@ -37,6 +37,7 @@ public:
     static void DestroyInstance();
 
 
+    void switchContent(int type);
 };
 
 

@@ -7,9 +7,11 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class NativeRender implements GLSurfaceView.Renderer {
 
-    public NativeRender() {
+    public NativeRender(int index) {
+        native_switchContent(index);
         native_OnInit();
     }
+
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -36,4 +38,7 @@ public class NativeRender implements GLSurfaceView.Renderer {
     public native void native_OnSurfaceChanged(int width, int height);
 
     public native void native_OnDrawFrame();
+
+    public native void native_switchContent(int index);
+
 }

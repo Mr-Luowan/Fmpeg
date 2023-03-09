@@ -226,12 +226,17 @@ JNIEXPORT void JNICALL native_OnDrawFrame(JNIEnv *env, jobject instance) {
     MyGLRenderContext::GetInstance()->OnDrawFrame();
 }
 
+JNIEXPORT void JNICALL switchContent(JNIEnv *env, jobject instance, jint index) {
+    MyGLRenderContext::GetInstance()->switchContent(index);
+}
+
 static JNINativeMethod g_RenderMethods[] = {
         {"native_OnInit",           "()V",   (void *) (native_OnInit)},
         {"native_OnUnInit",         "()V",   (void *) (native_OnUnInit)},
         {"native_OnSurfaceCreated", "()V",   (void *) (native_OnSurfaceCreated)},
         {"native_OnSurfaceChanged", "(II)V", (void *) (native_OnSurfaceChanged)},
         {"native_OnDrawFrame",      "()V",   (void *) (native_OnDrawFrame)},
+        {"native_switchContent",      "(I)V",   (void *) (switchContent)},
 };
 
 static int

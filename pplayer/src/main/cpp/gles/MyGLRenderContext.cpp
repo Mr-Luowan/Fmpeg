@@ -40,7 +40,6 @@ void MyGLRenderContext::OnSurfaceCreated() {
 //    triangleSample->init();
 //    doubleTriangleSample = new DoubleTriangleSample();
 //    doubleTriangleSample->init();
-    pictureSample = new PictureSample();
     pictureSample->init();
     LOGD(TAG, "MyGLRenderContext::OnSurfaceCreated Over");
 }
@@ -59,4 +58,20 @@ void MyGLRenderContext::OnDrawFrame() {
 //    triangleSample->draw(m_ScreenW, m_ScreenH);
 //    doubleTriangleSample->draw(m_ScreenW,m_ScreenH);
     pictureSample->draw(m_ScreenW, m_ScreenH);
+}
+
+void MyGLRenderContext::switchContent(int type) {
+    switch (type) {
+        case 0:{
+            pictureSample = new DoubleTriangleSample();
+            break;
+        }
+        case 1:{
+            pictureSample = new PictureSample();
+            break;
+        }
+        case 2:{
+            break;
+        }
+    }
 }

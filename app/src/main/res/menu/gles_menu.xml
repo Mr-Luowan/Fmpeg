@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/triangle"
+        android:title="triangle" />
+
+    <item android:id="@+id/pic"
+        android:title="Picture" />
+
+    <item android:id="@+id/cube"
+        android:title="cube" />
+
+</menu>

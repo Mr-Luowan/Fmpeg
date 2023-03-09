@@ -10,17 +10,23 @@ public class MyGLSurfaceView extends GLSurfaceView {
     public static final int IMAGE_FORMAT_NV21 = 0x02;
     public static final int IMAGE_FORMAT_NV12 = 0x03;
     public static final int IMAGE_FORMAT_I420 = 0x04;
+    private NativeRender mGlRender;
 
     public MyGLSurfaceView(Context context) {
-        this(context, null);
+        this(context, 0);
     }
 
-    public MyGLSurfaceView(Context context, AttributeSet attrs) {
+    public MyGLSurfaceView(Context context, int index) {
+        this(context, null, index);
+    }
+
+    public MyGLSurfaceView(Context context, AttributeSet attrs, int index) {
         super(context, attrs);
         setEGLContextClientVersion(3);
-        NativeRender GLRender = new NativeRender();
-        JavaGLRender javaGLRender = new JavaGLRender();
-        setRenderer(GLRender);
+        mGlRender = new NativeRender(index);
+        //JavaGLRender javaGLRender = new JavaGLRender();
+        setRenderer(mGlRender);
         setRenderMode(RENDERMODE_CONTINUOUSLY);
     }
+
 }
