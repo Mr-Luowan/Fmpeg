@@ -29,7 +29,7 @@ public class GLESActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glesactivity);
         mRootView = findViewById(R.id.root);
-        surface = new MyGLSurfaceView(this);
+        surface = new MyGLSurfaceView(this, 1);
         mRootView.addView(surface);
     }
 

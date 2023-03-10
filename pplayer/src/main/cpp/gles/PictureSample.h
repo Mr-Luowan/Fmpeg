@@ -26,6 +26,13 @@ public:
 
     void OnSurfaceChanged(int width, int height) override;
 
+    void updateTransformMatrix(float angleX, float angleY, float scaleX, float scaleY) override;
+
+private:
+    int m_iAngleX;
+    int m_iAngleY;
+    float m_fScaleX = 1.0f;
+    float m_fScaleY = 1.0f;
 };
 
 

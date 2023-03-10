@@ -18,7 +18,7 @@ public class MediaCodecDecodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_codec_decode);
-        mVideoPath = getExternalFilesDir(null).getAbsolutePath() + "/video/one_piece.mp4";
+        mVideoPath = getExternalFilesDir(null).getAbsolutePath() + "/video/test.mp4";
         SurfaceView surfaceView = findViewById(R.id.surface_view);
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override

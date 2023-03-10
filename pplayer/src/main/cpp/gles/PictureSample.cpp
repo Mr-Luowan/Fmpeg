@@ -86,19 +86,29 @@ void PictureSample::init() {
 void PictureSample::OnSurfaceChanged(int width, int height) {
     GLSampleBase::OnSurfaceChanged(width, height);
 
-    model = glm::mat4(1.0f);
-    view = glm::mat4(1.0f);
-    projection = glm::mat4(1.0f);
-
-    model = glm::rotate(model, glm::radians(-45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    model = glm::translate(model, glm::vec3(0.0f,0.0f,0.0f));
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    projection = glm::perspective(glm::radians(45.0f),
-                                  (float) m_SurfaceWidth / (float) m_SurfaceHeight, 0.1f, 100.0f);
-    projection = projection * view * model;
 }
 
 void PictureSample::draw(int width, int height) {
+
+    model = glm::mat4(1.0f);
+    view = glm::mat4(1.0f);
+    projection = glm::mat4(1.0f);
+    m_iAngleX = m_iAngleX % 360;
+    m_iAngleY = m_iAngleY % 360;
+    auto radiansX = static_cast<float>(3.1415926 / 180.0f * m_iAngleX);
+    auto radiansY = static_cast<float>(3.1415926 / 180.0f * m_iAngleY);
+    model = glm::scale(model, glm::vec3(m_fScaleX, m_fScaleY,1.0f));
+    model = glm::rotate(model, radiansX, glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, radiansY, glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(0.0f,0.0f,0.0f));
+    //view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    view = glm::lookAt(
+            glm::vec3(0, 0, 4), // Camera is at (0,0,1), in World Space
+            glm::vec3(0, 0, 0), // and looks at the origin
+            glm::vec3(0, 1, 0)  // Head is up (set to 0,-1,0 to look upside-down)
+    );
+    projection = glm::perspective(45.0f, (float) m_SurfaceWidth / (float) m_SurfaceHeight, 0.1f, 100.0f);
+    projection = projection * view * model;
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
     glActiveTexture(GL_TEXTURE1);
@@ -115,5 +125,13 @@ void PictureSample::draw(int width, int height) {
 
 void PictureSample::destroy() {
 
+}
+
+void PictureSample::updateTransformMatrix(float angleX, float angleY, float scaleX, float scaleY) {
+    GLSampleBase::updateTransformMatrix(angleX, angleY, scaleX, scaleY);
+    m_iAngleX = static_cast<int>(angleX);
+    m_iAngleY = static_cast<int>(angleY);
+    m_fScaleX = scaleX;
+    m_fScaleY = scaleY;
 }
 

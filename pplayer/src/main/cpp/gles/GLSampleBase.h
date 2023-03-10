@@ -32,9 +32,14 @@ public:
         m_SurfaceHeight = height;
     }
 
+    virtual void updateTransformMatrix(float angleX, float angleY, float scaleX, float scaleY) {
+
+    }
+
     virtual void LoadImage(_tag_NativeImage *pImage) {
 
     };
+
 };
 
 #endif //FMPEG_GLSAMPLEBASE_H

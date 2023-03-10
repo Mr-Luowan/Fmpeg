@@ -8,9 +8,7 @@
 void PlayerWrapper::init(JNIEnv *env, jobject obj, char *url, int playerType, int renderType,
                          jobject surface) {
     mediaPlayer = new FFMediaPlayer();
-    if (mediaPlayer) {
-        mediaPlayer->init(env, obj, url, renderType, surface);
-    }
+    mediaPlayer->init(env, obj, url, renderType, surface);
 }
 
 void PlayerWrapper::unInit() {

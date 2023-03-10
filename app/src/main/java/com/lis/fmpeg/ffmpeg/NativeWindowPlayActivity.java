@@ -12,6 +12,8 @@ import com.lis.fmpeg.R;
 import com.lis.pplayer.EventCallback;
 import com.lis.pplayer.FfmpegUtils;
 
+import java.io.File;
+
 public class NativeWindowPlayActivity extends AppCompatActivity implements SurfaceHolder.Callback, EventCallback {
     private static final String TAG = "NativeWindowPlayAc";
     private String mVideoPath;
@@ -21,7 +23,7 @@ public class NativeWindowPlayActivity extends AppCompatActivity implements Surfa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mVideoPath = getExternalFilesDir(null).getAbsolutePath() + "/video/one_piece.mp4";
+        mVideoPath = getExternalFilesDir(null).getAbsolutePath() + "/video/test.mp4";
         setContentView(R.layout.activity_native_window_play);
         MySurfaceView surfaceView = findViewById(R.id.surface_view);
         surfaceView.getHolder().addCallback(this);

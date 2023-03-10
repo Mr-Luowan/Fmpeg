@@ -28,6 +28,11 @@ public class NativeRender implements GLSurfaceView.Renderer {
         native_OnDrawFrame();
     }
 
+    public void updateTransformMatrix(float rotateX, float rotateY, float scaleX, float scaleY) {
+        native_UpdateTransformMatrix(rotateX, rotateY, scaleX, scaleY);
+    }
+
+
 
     public native void native_OnInit();
 
@@ -43,4 +48,5 @@ public class NativeRender implements GLSurfaceView.Renderer {
 
     public native void native_setImageData(int format, int width, int height, byte[] buffer);
 
+    public native void native_UpdateTransformMatrix(float rotateX, float rotateY, float scaleX, float scaleY);
 }

@@ -71,7 +71,7 @@ void MyGLRenderContext::switchContent(int type) {
     }
 }
 
-void MyGLRenderContext::setImageData(jint format, jint width, jint height, uint8_t *imgData) {
+void MyGLRenderContext::setImageData(int format, int width, int height, uint8_t *imgData) {
     NativeImage nativeImage;
     nativeImage.format = format;
     nativeImage.width = width;
@@ -94,4 +94,11 @@ void MyGLRenderContext::setImageData(jint format, jint width, jint height, uint8
         glSampleBase->LoadImage(&nativeImage);
     }
 
+}
+
+void MyGLRenderContext::updateTransformMatrix(float angleX, float angleY, float scaleX,
+                                              float scaleY) {
+    if (glSampleBase) {
+        glSampleBase->updateTransformMatrix(angleX, angleY, scaleX, scaleY);
+    }
 }

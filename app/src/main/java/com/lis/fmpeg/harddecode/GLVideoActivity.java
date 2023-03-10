@@ -17,7 +17,7 @@ public class GLVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glvideo);
-        String videoPath = getExternalFilesDir(null).getAbsolutePath() + "/video/one_piece.mp4";
+        String videoPath = getExternalFilesDir(null).getAbsolutePath() + "/video/test.mp4";
         GLSurfaceView surfaceView = findViewById(R.id.gl_surface_view);
         surfaceView.setEGLContextClientVersion(2);
         VideoRender videoRender = new VideoRender(this);

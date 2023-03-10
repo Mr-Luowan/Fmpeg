@@ -240,6 +240,10 @@ setImageData(JNIEnv *env, jobject instance, jint format, jint width, jint height
     delete[] buf;
     env->DeleteLocalRef(imgData);
 }
+JNIEXPORT void JNICALL updateTransformMatrix(JNIEnv *env, jobject instance,
+                                             jfloat angleX, jfloat angleY, jfloat scaleX, jfloat scaleY) {
+    MyGLRenderContext::GetInstance()->updateTransformMatrix(angleX, angleY, scaleX, scaleY);
+}
 
 static JNINativeMethod g_RenderMethods[] = {
         {"native_OnInit",           "()V",      (void *) (native_OnInit)},
@@ -249,6 +253,7 @@ static JNINativeMethod g_RenderMethods[] = {
         {"native_OnDrawFrame",      "()V",      (void *) (native_OnDrawFrame)},
         {"native_switchContent",    "(I)V",     (void *) (switchContent)},
         {"native_setImageData",     "(III[B)V", (void *) (setImageData)},
+        {"native_UpdateTransformMatrix",     "(FFFF)V", (void *) (updateTransformMatrix)},
 };
 
 static int

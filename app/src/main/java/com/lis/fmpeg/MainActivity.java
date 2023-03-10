@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         if (!hasPermissionsGranted(REQUEST_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, REQUEST_PERMISSIONS, PERMISSION_REQUEST_CODE);
         }
-        //CommonUtils.copyAssetsDirToPhone(this, "video", getExternalFilesDir(null).getPath());
+        CommonUtils.copyAssetsDirToPhone(this, "video", getExternalFilesDir(null).getPath());
     }
 
     private boolean hasPermissionsGranted(String[] permissions) {

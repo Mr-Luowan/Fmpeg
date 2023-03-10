@@ -38,7 +38,9 @@ public:
 
     void switchContent(int type);
 
-    void setImageData(jint format, jint width, jint height, uint8_t *imgData);
+    void setImageData(int format, int width, int height, uint8_t *imgData);
+
+    void updateTransformMatrix(float angleX, float angleY, float scaleX, float scaleY);
 };
 
 
