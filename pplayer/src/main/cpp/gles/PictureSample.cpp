@@ -54,7 +54,7 @@ void PictureSample::init() {
                                                  0);
     LOGE(TAG, "图片宽高 %d %d", width, height)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    //glGenerateMipmap(GL_TEXTURE_2D);
     stbi_image_free(image);
     delete[] fileData;
 
@@ -68,7 +68,7 @@ void PictureSample::init() {
     unsigned char *image2 = stbi_load_from_memory(fileData2, fileLength2, &width2, &height2,
                                                   &nrChannels2, 0);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, image2);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    //glGenerateMipmap(GL_TEXTURE_2D);
     LOGE(TAG, "图片宽高 %d %d", width2, height2)
     stbi_image_free(image2);
     delete[] fileData2;
