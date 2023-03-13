@@ -14,6 +14,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/player
         ${CMAKE_SOURCE_DIR}/player/decoder
         ${CMAKE_SOURCE_DIR}/player/render/video
+        ${CMAKE_SOURCE_DIR}/player/render/audio
         ${CMAKE_SOURCE_DIR}/opensl
         ${CMAKE_SOURCE_DIR}/gles
         ${CMAKE_SOURCE_DIR}/utils
@@ -82,7 +83,8 @@ set_target_properties( h264
 file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/player/*.cpp
         ${CMAKE_SOURCE_DIR}/player/decoder/*.cpp
-        ${CMAKE_SOURCE_DIR}/player/render/video/NativeRender.cpp
+        ${CMAKE_SOURCE_DIR}/player/render/video/*.cpp
+        ${CMAKE_SOURCE_DIR}/player/render/audio/*.cpp
         ${CMAKE_SOURCE_DIR}/opensl/*.cpp
         ${CMAKE_SOURCE_DIR}/gles/*.cpp
         ${CMAKE_SOURCE_DIR}/utils/*.cpp

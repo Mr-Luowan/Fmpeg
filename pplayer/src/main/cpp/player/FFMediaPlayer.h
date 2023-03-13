@@ -5,7 +5,9 @@
 #ifndef FMPEG_FFMEDIAPLAYER_H
 #define FMPEG_FFMEDIAPLAYER_H
 
-#include <VideoDecoder.h>
+#include "VideoDecoder.h"
+#include "AudioDecoder.h"
+#include "OpenSLRender.h"
 #include "MediaPlayer.h"
 
 class FFMediaPlayer: public MediaPlayer {
@@ -41,10 +43,10 @@ private:
     static void postMessage(void *context, int msgType, float msgCode);
 
     VideoDecoder *mVideoDecoder = nullptr;
-//    AudioDecoder *mAudioDecoder = nullptr;
+    AudioDecoder *mAudioDecoder = nullptr;
 
     VideoRender *mVideoRender = nullptr;
-//    AudioRender *mAudioRender = nullptr;
+    AudioRender *mAudioRender = nullptr;
 };
 
 

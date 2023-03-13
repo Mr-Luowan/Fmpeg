@@ -5,34 +5,52 @@
 #ifndef FMPEG_AUDIODECODER_H
 #define FMPEG_AUDIODECODER_H
 #include "DecoderBase.h"
+#include "Decoder.h"
+#include "AudioRender.h"
+#include "logUtils.h"
 
 extern "C" {
-#include <libavutil/avutil.h>
+#include <libavutil/samplefmt.h>
+#include <libswresample/swresample.h>
+#include <libavutil/opt.h>
+#include <libavutil/audio_fifo.h>
 };
+// 音频编码采样率
+static const int AUDIO_DST_SAMPLE_RATE = 44100;
+// 音频编码通道数
+static const int AUDIO_DST_CHANNEL_COUNTS = 2;
+// 音频编码声道格式
+static const uint64_t AUDIO_DST_CHANNEL_LAYOUT = AV_CH_LAYOUT_STEREO;
+// 音频编码比特率
+static const int AUDIO_DST_BIT_RATE = 64000;
+// ACC音频一帧采样数
+static const int ACC_NB_SAMPLES = 1024;
 
 class AudioDecoder: public DecoderBase {
 public:
+    AudioDecoder(char * url);
+
     virtual ~AudioDecoder();
 
-    virtual void start();
+    void setAudioRender(AudioRender *audioRender);
 
-    virtual void pause();
+private:
+    const AVSampleFormat DST_SAMPLT_FORMAT = AV_SAMPLE_FMT_S16;
+    AudioRender  *m_AudioRender = nullptr;
+    //audio resample context
+    SwrContext   *m_SwrContext = nullptr;
 
-    virtual void stop();
+    uint8_t      *m_AudioOutBuffer = nullptr;
 
-    virtual float getDuration();
+    //number of sample per channel
+    int           m_nbSamples = 0;
 
-    virtual void seekToPosition(float position);
-
-    virtual float getCurrentPosition();
-
-    virtual void setMessageCallback(void *context, MessageCallback callback);
+    //dst frame data size
+    int           m_DstFrameDataSze = 0;
+    virtual void ClearCache();
+    void onFrameAvailable(AVFrame *frame) override;
 
 protected:
-    virtual int init(const char *url, AVMediaType avMediaType);
-
-    virtual void unInit();
-
     virtual void onDecodeReady();
 
     virtual void onDecodeDone();

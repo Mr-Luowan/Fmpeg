@@ -207,8 +207,7 @@ void DecoderBase::updateTimeStamp() {
         mCurTimeStamp = 0;
     }
     LOGI(TAG, "updateTimeStamp__::mCurTimeStamp us--> %ld", mCurTimeStamp)
-    mCurTimeStamp = (int64_t) (
-            (mCurTimeStamp * av_q2d(mAVFormatContext->streams[mStreamIndex]->time_base)) * 1000);
+    mCurTimeStamp = (int64_t) ((mCurTimeStamp * av_q2d(mAVFormatContext->streams[mStreamIndex]->time_base)) * 1000);
     LOGI(TAG, "updateTimeStamp__::mCurTimeStamp ms--> %ld", mCurTimeStamp)
     if (mSeekPosition > 0 && mSeekSuccess) {
         mStartTimeStamp = GetSysCurrentTime() - mCurTimeStamp;
@@ -218,13 +217,9 @@ void DecoderBase::updateTimeStamp() {
 }
 
 long DecoderBase::doAVSync() {
-    LOGI(TAG, "doAVSync__音视频同步")
-    long curSysTime = GetSysCurrentTime();
-    LOGI(TAG, "doAVSync__curSysTime ==> %ld", curSysTime)
     //基于系统时钟计算从开始播放流逝的时间
-    LOGI(TAG, "doAVSync__mCurTimeStamp ==> %ld", mCurTimeStamp)
+    long curSysTime = (long)GetSysCurrentTime();
     long elapsedTime = curSysTime - mStartTimeStamp;
-    LOGI(TAG, "doAVSync__elapsedTime ==> %ld", elapsedTime)
     if (mMsgContext && messageCallback && mMediaType == AVMEDIA_TYPE_AUDIO) {
         messageCallback(mMsgContext, MSG_DECODING_TIME, mCurTimeStamp * 1.0f / 1000);
     }
@@ -242,9 +237,21 @@ long DecoderBase::doAVSync() {
 }
 
 int DecoderBase::decodeOnePacket() {
-    LOGI(TAG, "DecoderBase::DecodeOnePacket mMediaType=%d", mMediaType);
     if (mSeekPosition > 0) {
-
+        //seek to frame
+        int64_t seek_target = static_cast<int64_t>(mSeekPosition * 1000000);//微秒
+        int64_t seek_min = INT64_MIN;
+        int64_t seek_max = INT64_MAX;
+        int seek_ret = avformat_seek_file(mAVFormatContext, -1, seek_min, seek_target, seek_max, 0);
+        if (seek_ret < 0) {
+            mSeekSuccess = false;
+            LOGE("decodeOnePacket", "BaseDecoder::DecodeOneFrame error while seeking m_MediaType=%d", mMediaType);
+        } else {
+            if (-1 != mStreamIndex) {
+                avcodec_flush_buffers(mAVCodecContext);
+            }
+            mSeekSuccess = true;
+        }
     }
     int result = av_read_frame(mAVFormatContext, mPacket);
     while (result == 0) {
@@ -265,7 +272,9 @@ int DecoderBase::decodeOnePacket() {
                 onFrameAvailable(mFrame);
                 frameCount++;
             }
-            LOGE(TAG, "BaseDecoder::DecodeOneFrame frameCount=%d", frameCount);
+            if(frameCount < 1) {
+                LOGE(TAG, "BaseDecoder::DecodeOneFrame frameCount=%d", frameCount);
+            }
             //判断一个 packet 是否解码完成
             if (frameCount > 0) {
                 result = 0;

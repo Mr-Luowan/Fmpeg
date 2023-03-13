@@ -42,7 +42,6 @@ void VideoDecoder::onDecodeReady() {
         if (getCodecContext() == nullptr) {
             LOGE(TAG, "初始化mSwsContext getCodecContext() is null")
         } else {
-
             LOGE(TAG, "初始化mSwsContext getCodecContext() getCodecContext()->pix_fmt ==》 %d", getCodecContext()->pix_fmt)
         }
         LOGE(TAG, "初始化mSwsContext mRenderWidth ==> %d", mRenderWidth)
