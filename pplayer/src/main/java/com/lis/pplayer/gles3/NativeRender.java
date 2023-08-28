@@ -34,6 +34,8 @@ public class NativeRender implements GLSurfaceView.Renderer {
 
 
 
+    public native void testNative();
+
     public native void native_OnInit();
 
     public native void native_OnUnInit();

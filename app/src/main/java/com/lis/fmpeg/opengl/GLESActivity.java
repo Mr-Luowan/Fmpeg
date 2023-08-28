@@ -1,8 +1,5 @@
 package com.lis.fmpeg.opengl;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +8,11 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.lis.fmpeg.R;
-import com.lis.fmpeg.ffmpeg.MySurfaceView;
-import com.lis.pplayer.gles3.MyGLSurfaceView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
+import com.lis.fmpeg.R;
+import com.lis.pplayer.gles3.MyGLSurfaceView;
 
 public class GLESActivity extends AppCompatActivity {
     private static final String TAG = "GLESActivity";
@@ -31,6 +27,11 @@ public class GLESActivity extends AppCompatActivity {
         mRootView = findViewById(R.id.root);
         surface = new MyGLSurfaceView(this, 1);
         mRootView.addView(surface);
+        findViewById(R.id.test_btn).setOnClickListener(v -> {
+            if (surface != null) {
+                surface.testNative();
+            }
+        });
     }
 
     @Override

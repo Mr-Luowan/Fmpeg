@@ -55,7 +55,15 @@ public class FfmpegUtils {
         native_unInit(mNativePlayerHandle);
     }
 
-
+    public void onSurfaceCreated() {
+        native_onSurfaceCreated(mNativePlayerHandle);
+    }
+    public void onSurfaceChanged( int width, int height) {
+        native_onSurfaceChanged(mNativePlayerHandle, width, height);
+    }
+    public void onDrawFrame() {
+        native_onDrawFrame(mNativePlayerHandle);
+    }
 
 
     public native String stringFromJNI();
@@ -72,5 +80,11 @@ public class FfmpegUtils {
 
     private native void native_unInit(long playerHandle);
 
+    public native void native_onSurfaceCreated(long playerHandle);
+    public native void native_onSurfaceChanged(long playerHandle, int width, int height);
+
+    public native void native_onDrawFrame(long playerHandle);
+
+    public native void test();
 
 }

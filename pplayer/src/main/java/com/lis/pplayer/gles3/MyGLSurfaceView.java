@@ -170,4 +170,11 @@ public class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetect
         mPreScale = mCurScale;
         mLastMultiTouchTime = System.currentTimeMillis();
     }
+
+    public void testNative()
+    {
+        if (mGlRender != null) {
+            mGlRender.testNative();
+        }
+    }
 }

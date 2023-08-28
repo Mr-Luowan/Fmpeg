@@ -62,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goANativeWindowPage(View v) {
-        startActivity(new Intent(MainActivity.this, NativeWindowPlayActivity.class));
+//        startActivity(new Intent(MainActivity.this, NativeWindowPlayActivity.class));
+        FfmpegUtils ff = new FfmpegUtils();
+        ff.test();
     }
     public void mediaCodecDecode(View v) {
         startActivity(new Intent(MainActivity.this, MediaCodecDecodeActivity.class));
