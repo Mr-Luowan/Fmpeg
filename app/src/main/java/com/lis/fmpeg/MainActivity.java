@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     };
     private static final int PERMISSION_REQUEST_CODE = 1;
 
+    private FfmpegUtils mFfmpegUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(FfmpegUtils.getFFmpegVersion());
         setNativeAssetsManager(getAssets());
+        mFfmpegUtils = new FfmpegUtils();
     }
 
 
@@ -62,9 +65,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goANativeWindowPage(View v) {
+        mFfmpegUtils.test("1");
 //        startActivity(new Intent(MainActivity.this, NativeWindowPlayActivity.class));
-        FfmpegUtils ff = new FfmpegUtils();
-        ff.test();
     }
     public void mediaCodecDecode(View v) {
         startActivity(new Intent(MainActivity.this, MediaCodecDecodeActivity.class));

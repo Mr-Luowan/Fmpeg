@@ -85,6 +85,6 @@ public class FfmpegUtils {
 
     public native void native_onDrawFrame(long playerHandle);
 
-    public native void test();
+    public native void test(String fileName);
 
 }

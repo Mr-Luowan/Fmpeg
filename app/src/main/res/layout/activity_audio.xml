@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="playPCMVoice"
+        android:text="AudioRecorder播放PCM"
         android:onClick="playPCMVoice"/>
 
     <Button
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/audio_1"
-        android:text="开始录制"
+        android:text="AudioRecorder开始录制"
         android:onClick="recordPCMVoice"/>
 
     <Button
@@ -35,5 +35,15 @@
         app:layout_constraintTop_toBottomOf="@id/audio_3"
         android:text="C++暂停播放PCM"
         android:onClick="native_pausePCMVoice"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="C++录制音频"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/audio_4"
+        android:onClick="native_recordVoice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

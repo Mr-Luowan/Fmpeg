@@ -5,7 +5,7 @@ project("fmpeg")
 
 # 1. 定义so库和头文件所在目录，方面后面使用
 set(ffmpeg_lib_dir ${CMAKE_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
-message(WARNING "库文件路径 lib file path --> ${ffmpeg_lib_dir}")
+
 set(ffmpeg_head_dir ${CMAKE_SOURCE_DIR}/ffmpeginclude)
 
 # 2. 添加头文件目录
@@ -104,6 +104,16 @@ find_library(
         log-lib
         log)
 
+
+
+message(WARNING "CMAKE_SYSTEM name  --> ${CMAKE_SYSTEM}")
+message(WARNING "CMAKE_SYSTEM_PROCESSOR name  --> ${CMAKE_SYSTEM_PROCESSOR}")
+message(WARNING "CMAKE_BINARY_DIR  path  --> ${CMAKE_BINARY_DIR}")
+message(WARNING "CMAKE_SOURCE_DIR  path  --> ${CMAKE_SOURCE_DIR}")
+message(WARNING "CMAKE_BUILD_TYPE  type  --> ${CMAKE_BUILD_TYPE}")
+message(WARNING "ffmpeg  lib file path --> ${ffmpeg_lib_dir}")
+message(WARNING "111111111111CMAKE_CXX_FLAGS --> ${CMAKE_CXX_FLAGS}")
+message(WARNING "android log 2222222222222 log-lib path --> ${log-lib}")
 
 
 set(third_libs

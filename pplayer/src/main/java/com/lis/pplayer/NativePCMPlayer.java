@@ -4,6 +4,9 @@ package com.lis.pplayer;
 public class NativePCMPlayer {
     private long mNativePlayerHandle = -1;
 
+    public void recordPCMVoice(String pcmPath) {
+        mNativePlayerHandle = native_recordPCMVoice(pcmPath);
+    }
     public void playPCMVoice(String pcmPath) {
         mNativePlayerHandle = native_playPCMVoice(pcmPath);
     }
@@ -39,6 +42,7 @@ public class NativePCMPlayer {
 
 
 
+    public native long native_recordPCMVoice(String filePath);
     public native long native_playPCMVoice(String pcmPath);
     private native void native_pausePCMVoice(long playerHandle);
     private native void native_stopPCMVoice(long playerHandle);

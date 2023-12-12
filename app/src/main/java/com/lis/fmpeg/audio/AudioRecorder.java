@@ -7,9 +7,11 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -50,6 +52,10 @@ public class AudioRecorder {
     }
 
     public void record() {
+        if (mStatus == Status.STATUS_STOP)
+        {
+            mStatus = Status.STATUS_READY;
+        }
         if (mStatus != Status.STATUS_READY || mAudioRecord == null) {
             throw new IllegalStateException("mAudioRecord init failed!");
         }
@@ -61,22 +67,34 @@ public class AudioRecorder {
                 recordAudioData();
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.e(TAG, "can not find target file!");
             }
         });
     }
 
     private void recordAudioData() throws IOException {
-        try (OutputStream dos = new DataOutputStream(new FileOutputStream(mFilePath))) {
-            byte[] bytes = new byte[mBufferSizeInBytes];
-            mAudioRecord.startRecording();
-            mStatus = Status.STATUS_START;
-            while (mStatus == Status.STATUS_START) {
-                int bufferReadResult = mAudioRecord.read(bytes, 0, mBufferSizeInBytes);
-                if (bufferReadResult != AudioRecord.ERROR_INVALID_OPERATION) {
-                    dos.write(bytes);
+        File f = new File(mFilePath);
+        if (!f.exists())
+        {
+            String directStr = mFilePath.substring(0, mFilePath.lastIndexOf(File.separator) + 1);
+            boolean mkdirsResult = new File(directStr).mkdirs();
+            boolean createFileResult = f.createNewFile();
+            Log.i(TAG, "mkdirsResult = " + mkdirsResult + "  createNewFileResult = " + createFileResult);
+        }
+        try (FileOutputStream fos = new FileOutputStream(mFilePath)) {
+            try (OutputStream dos = new DataOutputStream(fos)) {
+                byte[] bytes = new byte[mBufferSizeInBytes];
+                mAudioRecord.startRecording();
+                mStatus = Status.STATUS_START;
+                while (mStatus == Status.STATUS_START) {
+                    int bufferReadResult = mAudioRecord.read(bytes, 0, mBufferSizeInBytes);
+                    if (bufferReadResult != AudioRecord.ERROR_INVALID_OPERATION) {
+                        dos.write(bytes);
+                    }
                 }
             }
         }
+
     }
 
     public void stopRecord() {
@@ -84,11 +102,11 @@ public class AudioRecorder {
         if (mAudioRecord != null && mAudioRecord.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
             mAudioRecord.stop();
         }
-        release();
+//        release();
         mHandler.post(() -> Toast.makeText(mContext, "录制完成", Toast.LENGTH_SHORT).show());
     }
 
-    private void release() {
+    public void release() {
         mStatus = Status.STATUS_NO_READY;
         if (mAudioRecord != null) {
             mAudioRecord.release();

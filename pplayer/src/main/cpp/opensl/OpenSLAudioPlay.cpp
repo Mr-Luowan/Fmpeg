@@ -79,30 +79,30 @@ bool OpenSLAudioPlay::init() {
                         : 3,    //sizeof(SLInterfaceID),与下面的SLInterfaceID和SLboolean配合使用,用于标记SLInterfaceID数组和SLboolean的大小
             ids,                    //这里需要传入一个数组,指定创建的播放器会包含哪些Interface
             req);                   //这里也是一个数组,用来标记每个需要包含的Interface);
-    checkSL(result, "CreateAudioPlayer");
+    mAudioEngine->checkSL(result, "CreateAudioPlayer");
     //  3.4 初始化播放器：mPlayerObj
     result = (*mPlayerObj)->Realize(mPlayerObj, SL_BOOLEAN_FALSE);
-    checkSL(result, "(*mPlayerObj)->Realize");
+    mAudioEngine->checkSL(result, "(*mPlayerObj)->Realize");
     //  3.5 获取播放器接口：SLPlayItf mPlayerObj
     result = (*mPlayerObj)->GetInterface(mPlayerObj, SL_IID_PLAY, &mPlayer);
-    checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_PLAY");
+    mAudioEngine->checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_PLAY");
     // TODO 第四大步：设置播放回调函数
     // 4.1 获取播放器队列接口：SLAndroidSimpleBufferQueueItf mBufferQueue
     result = (*mPlayerObj)->GetInterface(mPlayerObj, SL_IID_BUFFERQUEUE, &mBufferQueue);
-    checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_BUFFERQUEUE");
+    mAudioEngine->checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_BUFFERQUEUE");
     // 4.2 设置回调 void playerCallback(SLAndroidSimpleBufferQueueItf bq, void *context)
     result = (*mBufferQueue)->RegisterCallback(mBufferQueue, playCallback, this);
-    checkSL(result, "(*mBufferQueue)->RegisterCallback");
+    mAudioEngine->checkSL(result, "(*mBufferQueue)->RegisterCallback");
     mEffectSend = nullptr;
     if (mSampleRate == 0) {
         result = (*mPlayerObj)->GetInterface(mPlayerObj, SL_IID_EFFECTSEND, &mEffectSend);
-        checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_EFFECTSEND");
+        mAudioEngine->checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_EFFECTSEND");
     }
     result = (*mPlayerObj)->GetInterface(mPlayerObj, SL_IID_VOLUME, &mVolume);
-    checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_VOLUME");
+    mAudioEngine->checkSL(result, "(*mPlayerObj)->GetInterface SL_IID_VOLUME");
     // TODO 第五大步：设置播放器状态为播放状态
     result = (*mPlayer)->SetPlayState(mPlayer, SL_PLAYSTATE_PLAYING);
-    checkSL(result, "(*mPlayer)->SetPlayState");
+    mAudioEngine->checkSL(result, "(*mPlayer)->SetPlayState");
     return true;
 }
 
@@ -156,13 +156,6 @@ void OpenSLAudioPlay::release() {
     pthread_mutex_destroy(&mMutex);
 }
 
-bool OpenSLAudioPlay::checkSL(SLresult code, std::string msg) {
-    if (code != SL_RESULT_SUCCESS) {
-        LOGE("OpenSLAudioPlay", "%s", msg.c_str());
-        return false;
-    }
-    return true;
-}
 
 int OpenSLAudioPlay::getStatus(unsigned int *status) {
     if (mPlayer) {

@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lis.fmpeg.R;
 import com.lis.pplayer.NativePCMPlayer;
+
+import java.io.File;
 
 public class AudioActivity extends AppCompatActivity {
     private static final String TAG = "AudioActivity";
@@ -23,6 +26,11 @@ public class AudioActivity extends AppCompatActivity {
 
     public void playPCMVoice(View v) {
         String pcmFilePath = getExternalFilesDir(null).getPath() + "/audio/MyTestPCM.pcm";
+        if (!new File(pcmFilePath).exists())
+        {
+            Toast.makeText(this, "目标文件不存在", Toast.LENGTH_SHORT).show();
+            return;
+        }
         AudioTracker audioTracker = new AudioTracker(this);
         audioTracker.createAudioTracker(pcmFilePath);
         audioTracker.start();
@@ -45,10 +53,27 @@ public class AudioActivity extends AppCompatActivity {
 
     public void native_playPCMVoice(View v) {
         String pcmFilePath = getExternalFilesDir(null).getPath() + "/audio/MyTestPCM.pcm";
+        if (!new File(pcmFilePath).exists())
+        {
+            Toast.makeText(this, "目标文件不存在", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mNativePCMPlayer = new NativePCMPlayer();
         mNativePCMPlayer.playPCMVoice(pcmFilePath);
         NativePCMPlayer.PlayStatus status = mNativePCMPlayer.getStatus();
         Log.i(TAG, "播放器状态 status =  " + status);
+    }
+
+
+    public void native_recordVoice(View v) {
+        String pcmFilePath = getExternalFilesDir(null).getPath() + "/audio/a.txt";
+        if (!new File(pcmFilePath).exists())
+        {
+            Toast.makeText(this, "目标文件不存在", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mNativePCMPlayer = new NativePCMPlayer();
+        mNativePCMPlayer.recordPCMVoice(pcmFilePath);
     }
 
     public void native_pausePCMVoice(View v) {
@@ -68,5 +93,13 @@ public class AudioActivity extends AppCompatActivity {
         mNativePCMPlayer.stopPCMVoice();
         NativePCMPlayer.PlayStatus status = mNativePCMPlayer.getStatus();
         Log.i(TAG, "播放器状态 status =  " + status);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAudioRecorder != null) {
+            mAudioRecorder.release();
+        }
     }
 }

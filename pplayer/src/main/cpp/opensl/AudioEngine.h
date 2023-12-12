@@ -27,6 +27,15 @@ public:
         release();
     }
 
+    bool checkSL(SLresult code, std::string msg)
+    {
+        if (code != SL_RESULT_SUCCESS) {
+            LOGE("【ERROR】 OpenSLAudioPlay", "%s", msg.c_str());
+            return false;
+        }
+        return true;
+    }
+
 private:
     void createEngine() {
         //音频播放，涉及到 OpenSlES

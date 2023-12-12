@@ -38,8 +38,6 @@ public:
 
     friend void playCallback(SLAndroidSimpleBufferQueueItf bq, void *context);
 
-    bool checkSL(SLresult code, std::string msg);
-
     int getStatus(unsigned int *status);
 
     void pause();
